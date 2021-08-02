@@ -10,6 +10,6 @@ Rules of the game
 OBS: the multiply time can be seted at "time_to_multiply" var to increase the challenge.
 
 HOW TO RUN:
-#1 Download the repository
-#2 Make sure you have pygame installed
-#3 Run the code and have fun!
+1. Download the repository
+2. Make sure you have pygame installed
+3. Run the code and have fun!
