@@ -1,5 +1,5 @@
 # vaxmanpython
-Implementation of the game "vaxman" in python over hbokmann pacman implementation and you can find it here: https://github.com/hbokmann/Pacman
+Implementation of the game "vaxman" in python over hbokmann pacman implementation and you can find it in the link below: https://github.com/hbokmann/Pacman
 
 Rules of the game
 
