@@ -21,6 +21,7 @@ yellow   = ( 255, 255,   0)
 
 # set how long in seconds till a virus multiply since it's been born
 time_to_multiply = 5
+init_virus = 5
 
 Trollicon=pygame.image.load('./images/Trollman.png')
 pygame.display.set_icon(Trollicon)
@@ -230,14 +231,9 @@ class Virus(Player):
 
     def multiply(self):
       #every 30 seconds create a new virus from same genetic code, but with collor change(mutation)
-
-      if time.time() - self.time > time_to_multiply:
         self.time = time.time()
         a = Virus( self.init_x, self.init_y, "images/"+sprites[randint(0,len(sprites)-1)], self.virus_directions)
-    
-    
         return a
-      return 0
 
 
     # Change the speed of the virus
@@ -449,14 +445,34 @@ def startGame():
       virus_list.add(a)
       all_sprites_list.add(a)
     if i%4 == 2:
-        a=Virus( i_w, m_h, "images/"+sprites[randint(0,len(sprites)-1)], Inky_directions )
+        a=Virus( i_w, m_h, "images/"+sprites[randint(0,len(sprites)-1)], Inky_directions)
         virus_list.add(a)
         all_sprites_list.add(a)
     if i%4 == 3:
-        a=Virus( w, b_h, "images/"+sprites[randint(0,len(sprites)-1)], Blinky_directions )
+        a=Virus( w, b_h, "images/"+sprites[randint(0,len(sprites)-1)], Blinky_directions)
         virus_list.add(a)
         all_sprites_list.add(a)
 
+    def virus_routine(virus):
+      returned = virus.changespeed(virus.p_turn,virus.p_steps)
+      virus.p_turn = returned[0]
+      virus.p_steps = returned[1]
+      virus.changespeed(virus.p_turn,virus.p_steps)
+      virus.update(wall_list,False)
+
+
+  if init_virus>4:
+    aux_new_virus = init_virus
+    for virus in virus_list:
+      if aux_new_virus != 4:
+        new_virus = virus.multiply()
+        if new_virus != 0:
+          virus_list.add(new_virus)
+          all_sprites_list.add(new_virus)
+          aux_new_virus = aux_new_virus - 1
+          for i in range(randint(0, 200)): #loop no initialize the new virus in a random new position
+            virus_routine(new_virus)
+      
 
   
 
@@ -518,22 +534,17 @@ def startGame():
       # ALL GAME LOGIC SHOULD GO BELOW THIS COMMENT
       Pacman.update(wall_list,gate)
 
-      def virus_routine(virus):
-          returned = virus.changespeed(virus.p_turn,virus.p_steps)
-          virus.p_turn = returned[0]
-          virus.p_steps = returned[1]
-          virus.changespeed(virus.p_turn,virus.p_steps)
-          virus.update(wall_list,False)
 
       #routine to dinamicaly update virus position
       for virus in virus_list:
         virus_routine(virus)
-        new_virus = virus.multiply()
-        if new_virus != 0:
-          virus_list.add(new_virus)
-          all_sprites_list.add(new_virus)
-          for i in range(randint(0, 200)): #loop no initialize the new virus in a random new position
-            virus_routine(new_virus)
+        if time.time() - virus.time > time_to_multiply:
+          new_virus = virus.multiply()
+          if new_virus != 0:
+            virus_list.add(new_virus)
+            all_sprites_list.add(new_virus)
+            for i in range(randint(0, 200)): #loop no initialize the new virus in a random new position
+              virus_routine(new_virus)
 
       # If pacman colides with any object inside virus list, virus is killed from the list and not rendered
       pygame.sprite.spritecollide(Pacman, virus_list, True)
@@ -563,7 +574,7 @@ def startGame():
       if score  >= bll:
         doNext("Congratulations, you won!",145,all_sprites_list,block_list,virus_list,pacman_collide,wall_list,gate) 
 
-      if len(virus_list) >= 32 :
+      if len(virus_list) >= 32*init_virus :
         doNext("Game Over",235,all_sprites_list,block_list,virus_list,pacman_collide,wall_list,gate)
 
       # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
