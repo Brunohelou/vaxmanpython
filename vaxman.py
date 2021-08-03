@@ -21,7 +21,7 @@ yellow   = ( 255, 255,   0)
 
 # set how long in seconds till a virus multiply since it's been born
 time_to_multiply = 30
-init_virus = 10
+init_virus = 4
 
 Trollicon=pygame.image.load('./images/Trollman.png')
 pygame.display.set_icon(Trollicon)
@@ -47,7 +47,7 @@ class Wall(pygame.sprite.Sprite):
         self.rect.left = x
 
 #list of sprites
-sprites = ["corona_v.png","corona.png"]
+sprites = ["Pinky.png","Blinky.png", "Inky.png", "Clyde.png"]
 
 
 # This creates all the walls in room 1
@@ -437,19 +437,19 @@ def startGame():
   #adding range 5 for example will create 5 viruses, but there will be two Pinky walking together.
   for i in range(4):
     if i%4 == 0:
-      a = Virus( w, m_h, "images/"+sprites[randint(0,len(sprites)-1)], Pinky_directions)
+      a = Virus( w, m_h, "images/"+sprites[0], Pinky_directions)
       virus_list.add(a)
       all_sprites_list.add(a)
     if i%4 == 1:
-      a = Virus( c_w, m_h, "images/"+sprites[randint(0,len(sprites)-1)], Clyde_directions)
+      a = Virus( c_w, m_h, "images/"+sprites[1], Clyde_directions)
       virus_list.add(a)
       all_sprites_list.add(a)
     if i%4 == 2:
-        a=Virus( i_w, m_h, "images/"+sprites[randint(0,len(sprites)-1)], Inky_directions)
+        a=Virus( i_w, m_h, "images/"+sprites[2], Inky_directions)
         virus_list.add(a)
         all_sprites_list.add(a)
     if i%4 == 3:
-        a=Virus( w, b_h, "images/"+sprites[randint(0,len(sprites)-1)], Blinky_directions)
+        a=Virus( w, b_h, "images/"+sprites[3], Blinky_directions)
         virus_list.add(a)
         all_sprites_list.add(a)
 
@@ -471,7 +471,6 @@ def startGame():
             virus_list.add(new_virus)
             all_sprites_list.add(new_virus)
             aux_new_virus = aux_new_virus - 1
-            print(aux_new_virus)
             for i in range(randint(0, 200)): #loop no initialize the new virus in a random new position
               virus_routine(new_virus)
         
