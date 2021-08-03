@@ -97,7 +97,7 @@ def setupRoomOne(all_sprites_list):
      
     # Loop through the list. Create the wall, add it to the list
     for item in walls:
-        wall=Wall(item[0],item[1],item[2],item[3],white)
+        wall=Wall(item[0],item[1],item[2],item[3],blue)
         wall_list.add(wall)
         all_sprites_list.add(wall)
          
@@ -568,9 +568,9 @@ def startGame():
       all_sprites_list.draw(screen)
       virus_list.draw(screen)
 
-      text=font.render("Score: "+str(score)+"/"+str(bll), True, yellow)
+      text=font.render("Score: "+str(score)+"/"+str(bll), True, green)
       screen.blit(text, [10, 10])
-      text=font.render("Virus: "+str(len(virus_list)), True, yellow)
+      text=font.render("Virus: "+str(len(virus_list)), True, green)
       screen.blit(text, [450, 10])
 
       if score  >= bll:
