@@ -7,7 +7,7 @@
  
 
 
-from hashlib import new
+
 import pygame
 import time
 from random import randint, random
@@ -20,8 +20,8 @@ purple = (255,0,255)
 yellow   = ( 255, 255,   0)
 
 # set how long in seconds till a virus multiply since it's been born
-time_to_multiply = 5
-init_virus = 5
+time_to_multiply = 30
+init_virus = 10
 
 Trollicon=pygame.image.load('./images/Trollman.png')
 pygame.display.set_icon(Trollicon)
@@ -463,16 +463,18 @@ def startGame():
 
   if init_virus>4:
     aux_new_virus = init_virus
-    for virus in virus_list:
-      if aux_new_virus != 4:
-        new_virus = virus.multiply()
-        if new_virus != 0:
-          virus_list.add(new_virus)
-          all_sprites_list.add(new_virus)
-          aux_new_virus = aux_new_virus - 1
-          for i in range(randint(0, 200)): #loop no initialize the new virus in a random new position
-            virus_routine(new_virus)
-      
+    while aux_new_virus > 4:
+      for virus in virus_list:
+        if aux_new_virus > 4:
+          new_virus = virus.multiply()
+          if new_virus != 0:
+            virus_list.add(new_virus)
+            all_sprites_list.add(new_virus)
+            aux_new_virus = aux_new_virus - 1
+            print(aux_new_virus)
+            for i in range(randint(0, 200)): #loop no initialize the new virus in a random new position
+              virus_routine(new_virus)
+        
 
   
 
